@@ -352,24 +352,20 @@ wheels = [
 [[package]]
 name = "ib1-provenance"
 version = "0.5.3"
-source = { directory = "../provenance" }
+source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asn1crypto" },
     { name = "cryptography" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/d3/bc/e42f2638eb13e350aa25c6f7868be229d3adc0703c099dfde07b6473e1f0/ib1_provenance-0.5.3.tar.gz", hash = "sha256:c890e12fcf4e820bb59877d61617da9c9e56145cedd46feb7a076b02b053e1b3", size = 7367, upload-time = "2025-11-10T14:20:45.956Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/66/fc/9a23e69cfce9f2af28aece89fd95df18115a511d16ea4e9bb43efa8df498/ib1_provenance-0.5.3-py3-none-any.whl", hash = "sha256:59231ccf12e4a904869f1bbc46932399ec10e08a6ea565c4ad93ec7d462b523f", size = 8678, upload-time = "2025-11-10T14:20:44.874Z" },
 ]
 
 [package.optional-dependencies]
 kms = [
     { name = "boto3" },
 ]
-
-[package.metadata]
-requires-dist = [
-    { name = "asn1crypto", specifier = ">=1.5.1,<2.0.0" },
-    { name = "boto3", marker = "extra == 'kms'", specifier = ">=1.35.0,<2.0.0" },
-    { name = "cryptography", specifier = ">=43.0.1,<44.0.0" },
-]
-provides-extras = ["kms"]
 
 [[package]]
 name = "idna"
@@ -560,7 +556,7 @@ requires-dist = [
     { name = "boto3", specifier = ">=1.40.52" },
     { name = "cryptography", specifier = ">=43.0.3" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.119.0" },
-    { name = "ib1-provenance", extras = ["kms"], directory = "../provenance" },
+    { name = "ib1-provenance", extras = ["kms"], specifier = "==0.5.3" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "mangum", specifier = ">=0.19.0" },
 ]
