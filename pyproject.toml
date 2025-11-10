@@ -1,0 +1,37 @@
+[project]
+name = "provenance-service"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "boto3>=1.40.52",
+    "cryptography>=43.0.3",
+    "fastapi[standard]>=0.119.0",
+    "ib1-provenance[kms]==0.5.2",
+    "loguru>=0.7.3",
+    "mangum>=0.19.0",
+]
+
+[dependency-groups]
+deployment = [
+    "mangum>=0.19.0",
+    "uvicorn>=0.37.0",
+]
+dev = [
+    "asn1crypto>=1.5.1",
+    "boto3>=1.40.52",
+    "pyasn1>=0.6.1",
+    "pyasn1-modules>=0.4.2",
+    "requests>=2.32.5",
+]
+test = [
+    "pytest>=9.0.0",
+]
+
+[tool.pytest.ini_options]
+pythonpath = ["."]
+testpaths = ["tests"]
+
+[tool.uv.sources]
+ib1-provenance = { path = "../provenance" }

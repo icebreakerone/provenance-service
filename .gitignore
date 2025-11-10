@@ -1,0 +1,17 @@
+# Python-generated files
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+
+# Virtual environments
+.venv
+certs/
+test-scripts/
+*provenance_record.json
+.env
+tests/__pycache__/
+.pytest_cache/
+todo.md
