@@ -8,7 +8,7 @@ dependencies = [
     "boto3>=1.40.52",
     "cryptography>=43.0.3",
     "fastapi[standard]>=0.119.0",
-    "ib1-provenance[kms]==0.5.2",
+    "ib1-provenance[kms]==0.5.3",
     "loguru>=0.7.3",
     "mangum>=0.19.0",
 ]
@@ -33,5 +33,3 @@ test = [
 pythonpath = ["."]
 testpaths = ["tests"]
 
-[tool.uv.sources]
-ib1-provenance = { path = "../provenance" }
