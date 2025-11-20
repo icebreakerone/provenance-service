@@ -6,16 +6,19 @@ An API providing endpoints for provenance record creation and signing
 
 First create a .env file with the following entries:
 
-```shell
-# .env
+```
 ROOT_CA_CERTIFICATE=./certs/root-ca.pem
-# SIGNING_KEY=./certs/vibt9775-key.pem
-KMS_KEY_ID=xxxxxx-xxxxxx
-SIGNING_BUNDLE=./certs/signing-issued-intermediate-bundle-kms.pem
+SIGNING_KEY=./certs/my-key.pem
+SIGNING_BUNDLE=./certs/signing-issued-intermediate-bundle.pem
 SCHEME_URI=https://registry.core.sandbox.trust.ib1.org/scheme/perseus
+```
+
+Optional values to run the included dockerfile
+
+```
 AWS_DEFAULT_REGION=eu-west-2
-AWS_ACCESS_KEY_ID=AKAKAKAKAKAKA
-AWS_SECRET_ACCESS_KEY=ASJDKLASJD6789812394817
+AWS_ACCESS_KEY_ID=XXXXX
+AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXX
 ```
 
 Start the dev server
@@ -34,23 +37,6 @@ uv run test_client.py
 ## Certificates required
 
 Use your member account on directory to create a signing certificate and download the signing root and intermediate CA certificates. A signing bundle should be created from the leaf certificate and intermediate CA certificate.
-
-## Env file
-
-```
-ROOT_CA_CERTIFICATE=./certs/root-ca.pem
-SIGNING_KEY=./certs/my-key.pem
-SIGNING_BUNDLE=./certs/signing-issued-intermediate-bundle.pem
-SCHEME_URI=https://registry.core.sandbox.trust.ib1.org/scheme/perseus
-```
-
-Optional values to run the included dockerfile
-
-```
-AWS_DEFAULT_REGION=eu-west-2
-AWS_ACCESS_KEY_ID=XXXXX
-AWS_SECRET_ACCESS_KEY=XXXXXXXXXXXXXX
-```
 
 ## Docker
 
