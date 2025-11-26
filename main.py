@@ -4,6 +4,7 @@ from fastapi import FastAPI, HTTPException, status
 from ib1.provenance.certificates import (  # type: ignore
     CertificatesProviderSelfContainedRecord,
 )
+from ib1.provenance import Record
 
 from app import conf
 from app.exceptions import ConfigurationError, FrameworkAuthError
@@ -102,6 +103,14 @@ def sign_cap(request: CapProvenanceRecordRequest):
         Exception
     ) as exc:  # noqa: BLE001 - centralised error translation handles specifics
         _handle_endpoint_exception("create CAP provenance record", exc)
+
+
+@app.post("/api/v1/decode")
+def decode_provenance_record(record_encoded: dict):
+    """Decode a provenance record from a dictionary."""
+    record = Record(record_encoded["ib1:provenance"], record_encoded)
+    record.verify(context["certificate_provider"])
+    return record.decoded()
 
 
 def _handle_endpoint_exception(action: str, exc: Exception):

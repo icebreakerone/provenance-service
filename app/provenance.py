@@ -12,6 +12,12 @@ from .conf import SCHEME_URL, TRUST_FRAMEWORK_URL
 logging = get_logger()
 
 
+def _date_to_iso(d: datetime.date | datetime.datetime) -> str:
+    if isinstance(d, datetime.datetime):
+        d = d.date()
+    return f"{d.isoformat()}T00:00Z"
+
+
 def create_edp_provenance_record(
     signer: SignerInMemory,
     from_date: datetime.date,
@@ -51,8 +57,8 @@ def create_edp_provenance_record(
             "permissions": [edp_permission_id],
             "perseus:scheme": {
                 "meteringPeriod": {
-                    "from": f"{from_date.isoformat()}Z",
-                    "to": f"{to_date.isoformat()}Z",
+                    "from": _date_to_iso(from_date),
+                    "to": _date_to_iso(to_date),
                 }
             },
             "perseus:assurance": {
@@ -74,8 +80,8 @@ def create_edp_provenance_record(
             "path": "/readings",
             "parameters": {
                 "measure": "import",
-                "from": f"{from_date.isoformat()}Z",
-                "to": f"{to_date.isoformat()}Z",
+                "from": _date_to_iso(from_date),
+                "to": _date_to_iso(to_date),
             },
             "permissions": [edp_permission_id],
             "transaction": fapi_id,
@@ -171,13 +177,13 @@ def create_cap_provenance_record(
         "path": "/readings",
         "parameters": {
             "measure": "import",
-            "from": f"{from_date.isoformat()}Z",
-            "to": f"{to_date.isoformat()}Z",
+            "from": _date_to_iso(from_date),
+            "to": _date_to_iso(to_date),
         },
         "_signature": {
             "signed": {
                 "member": edp_member_id,
-                "roles": [f"{SCHEME_URL}/role/carbon-accounting-provider"],
+                "roles": [f"{SCHEME_URL}/role/energy-data-provider"],
             }
         },
     }
@@ -218,8 +224,8 @@ def create_cap_provenance_record(
             "external": True,
             "perseus:scheme": {
                 "meteringPeriod": {
-                    "from": f"{from_date.isoformat()}Z",
-                    "to": f"{to_date.isoformat()}Z",
+                    "from": _date_to_iso(from_date),
+                    "to": _date_to_iso(to_date),
                 },
                 "postcode": postcode,
             },
@@ -255,8 +261,8 @@ def create_cap_provenance_record(
             "service": bank_service_url,
             "path": "/emissions",
             "parameters": {
-                "from": f"{from_date.isoformat()}Z",
-                "to": f"{to_date.isoformat()}Z",
+                "from": _date_to_iso(from_date),
+                "to": _date_to_iso(to_date),
             },
             "permissions": [cap_permission_id],
         }
