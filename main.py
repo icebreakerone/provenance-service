@@ -1,10 +1,12 @@
 from contextlib import asynccontextmanager
 
+from cryptography.exceptions import InvalidSignature
+from cryptography.x509.verification import VerificationError as ChainVerificationError
 from fastapi import FastAPI, HTTPException, status
 from ib1.provenance.certificates import (  # type: ignore
     CertificatesProviderSelfContainedRecord,
 )
-from ib1.provenance import Record
+from ib1.provenance import ProvenanceError, Record
 
 from app import conf
 from app.exceptions import ConfigurationError, FrameworkAuthError
@@ -107,17 +109,35 @@ def sign_cap(request: CapProvenanceRecordRequest):
 
 @app.post("/api/v1/decode")
 def decode_provenance_record(record_encoded: dict):
-    """Decode a provenance record from a dictionary."""
-    record = Record(record_encoded["ib1:provenance"], record_encoded)
-    record.verify(context["certificate_provider"])
-    return record.decoded()
+    """Verify a provenance record and return its decoded form."""
+    try:
+        record = Record(record_encoded["ib1:provenance"], record_encoded)
+        record.verify(context["certificate_provider"])
+        return record.decoded()
+    except (
+        Exception
+    ) as exc:  # noqa: BLE001 - centralised error translation handles specifics
+        _handle_endpoint_exception("decode provenance record", exc)
 
 
 def _handle_endpoint_exception(action: str, exc: Exception):
     """
     Convert domain errors into HTTP errors while logging appropriately.
     """
-    if isinstance(exc, (ValueError, FrameworkAuthError)):
+    # ProvenanceError covers ib1-provenance's ValidationError, VerificationError
+    # and CertificateError. The library leaves bad signatures and invalid
+    # certificate chains as the cryptography library's own exceptions.
+    if isinstance(
+        exc,
+        (
+            ValueError,
+            KeyError,
+            FrameworkAuthError,
+            ProvenanceError,
+            InvalidSignature,
+            ChainVerificationError,
+        ),
+    ):
         logger.warning("%s failed with client error: %s", action, exc)
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,

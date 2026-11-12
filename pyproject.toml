@@ -8,7 +8,7 @@ dependencies = [
     "boto3>=1.40.52",
     "cryptography>=43.0.3",
     "fastapi[standard]>=0.119.0",
-    "ib1-provenance[kms]==0.5.3",
+    "ib1-provenance[kms]==0.6.0",
     "loguru>=0.7.3",
     "mangum>=0.19.0",
 ]
@@ -26,6 +26,7 @@ dev = [
     "requests>=2.32.5",
 ]
 test = [
+    "asn1crypto>=1.5.1",
     "pytest>=9.0.0",
 ]
 
