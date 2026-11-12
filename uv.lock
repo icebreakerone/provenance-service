@@ -351,15 +351,15 @@ wheels = [
 
 [[package]]
 name = "ib1-provenance"
-version = "0.5.3"
+version = "0.6.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "asn1crypto" },
     { name = "cryptography" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/d3/bc/e42f2638eb13e350aa25c6f7868be229d3adc0703c099dfde07b6473e1f0/ib1_provenance-0.5.3.tar.gz", hash = "sha256:c890e12fcf4e820bb59877d61617da9c9e56145cedd46feb7a076b02b053e1b3", size = 7367, upload-time = "2025-11-10T14:20:45.956Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/d7/db/c0b12aeeea906fe5305acc91b5c66924ef370d39a8a7f00f93c9f5aa0d69/ib1_provenance-0.6.0.tar.gz", hash = "sha256:884ac0002390bdfafda1d7d62e13617db6406dcc0dd770198565337e71fc06bb", size = 13869, upload-time = "2026-11-12T13:24:44.479Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/66/fc/9a23e69cfce9f2af28aece89fd95df18115a511d16ea4e9bb43efa8df498/ib1_provenance-0.5.3-py3-none-any.whl", hash = "sha256:59231ccf12e4a904869f1bbc46932399ec10e08a6ea565c4ad93ec7d462b523f", size = 8678, upload-time = "2025-11-10T14:20:44.874Z" },
+    { url = "https://files.pythonhosted.org/packages/c4/ff/fbfc2e3c0660bb13e33e3cc8405cf74c274b91f0f2a8e48f2001dd87e0e7/ib1_provenance-0.6.0-py3-none-any.whl", hash = "sha256:bc650d6677a7c6e3b192907c5941d2d630ad7097118e56ec22112d9dffd3d013", size = 14725, upload-time = "2026-11-12T13:24:43.306Z" },
 ]
 
 [package.optional-dependencies]
@@ -548,6 +548,7 @@ dev = [
     { name = "requests" },
 ]
 test = [
+    { name = "asn1crypto" },
     { name = "pytest" },
 ]
 
@@ -556,7 +557,7 @@ requires-dist = [
     { name = "boto3", specifier = ">=1.40.52" },
     { name = "cryptography", specifier = ">=43.0.3" },
     { name = "fastapi", extras = ["standard"], specifier = ">=0.119.0" },
-    { name = "ib1-provenance", extras = ["kms"], specifier = "==0.5.3" },
+    { name = "ib1-provenance", extras = ["kms"], specifier = "==0.6.0" },
     { name = "loguru", specifier = ">=0.7.3" },
     { name = "mangum", specifier = ">=0.19.0" },
 ]
@@ -573,7 +574,10 @@ dev = [
     { name = "pyasn1-modules", specifier = ">=0.4.2" },
     { name = "requests", specifier = ">=2.32.5" },
 ]
-test = [{ name = "pytest", specifier = ">=9.0.0" }]
+test = [
+    { name = "asn1crypto", specifier = ">=1.5.1" },
+    { name = "pytest", specifier = ">=9.0.0" },
+]
 
 [[package]]
 name = "pyasn1"

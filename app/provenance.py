@@ -18,6 +18,16 @@ def _date_to_iso(d: datetime.date | datetime.datetime) -> str:
     return f"{d.isoformat()}T00:00Z"
 
 
+def _iso_utc(when: datetime.datetime) -> str:
+    """Format a time as ISO 8601 in UTC with a Z suffix, as the specification requires.
+
+    Naive datetimes are taken to be UTC. Sub-second precision is dropped.
+    """
+    if when.tzinfo is None:
+        when = when.replace(tzinfo=datetime.timezone.utc)
+    return when.astimezone(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+
 def create_edp_provenance_record(
     signer: SignerInMemory,
     from_date: datetime.date,
@@ -38,12 +48,12 @@ def create_edp_provenance_record(
         {
             "type": "permission",
             "scheme": SCHEME_URL,
-            "timestamp": f"{permission_granted.isoformat()[0:-7]}Z",
+            "timestamp": _iso_utc(permission_granted),
             "account": account,
             "allows": {
                 "licences": [f"{SCHEME_URL}/licence/energy-consumption-data/2024-12-05"]
             },
-            "expires": f"{permission_expires.isoformat()[0:-7]}Z",
+            "expires": _iso_utc(permission_expires),
         }
     )
     origin_id = edp_record.add_step(
@@ -201,7 +211,7 @@ def create_cap_provenance_record(
         {
             "type": "permission",
             "scheme": SCHEME_URL,
-            "timestamp": f"{cap_permission_granted.isoformat()[0:-7]}Z",
+            "timestamp": _iso_utc(cap_permission_granted),
             "account": cap_account,
             "allows": {
                 "licenses": [f"{SCHEME_URL}/license/emissions-report/2024-12-05"],
@@ -209,7 +219,7 @@ def create_cap_provenance_record(
                     f"{SCHEME_URL}/process/emissions-calculations/2024-12-05"
                 ],
             },
-            "expires": f"{cap_permission_expires.isoformat()[0:-7]}Z",
+            "expires": _iso_utc(cap_permission_expires),
         }
     )
 
